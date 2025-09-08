@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Un regalo especial para ti</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Epunda+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #cbe5ff 0%, #e0ecff 50%, #b1d0ec 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-family: 'Epunda Slab', serif;
+      letter-spacing: 0.01em;
+    }
+    .card {
+      background: #fff;
+      box-shadow: 0 8px 32px 0 rgba(94, 124, 183, 0.13);
+      border-radius: 18px;
+      padding: 2.5rem 2rem;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      border: 1.5px solid #b3d2f9;
+    }
+    .card h1 {
+      color: #3366a3;
+      font-size: 1.35rem;
+      margin-bottom: 1.2rem;
+      font-family: 'Cutive Mono', monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #3366a3;
+      width: 0;
+      animation: typing 2.2s steps(32, end) 0.35s forwards, blink-caret .8s step-end infinite;
+      text-align: center;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      margin-top: 0.3em;
+      margin-left: auto;
+      margin-right: auto;
+      min-height: 2.3em;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #3366a3 }
+    }
+    .question {
+      margin: 1.2rem 0;
+      font-size: 1.08rem;
+      color: #276398;
+      font-family: 'Epunda Slab', serif;
+    }
+    input[type="text"] {
+      width: 90%;
+      padding: 0.6rem;
+      border: 1.5px solid #cbe5ff;
+      border-radius: 7px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-family: 'Epunda Slab', serif;
+      outline: none;
+      transition: border 0.2s;
+      background: #f4faff;
+      color: #18304b;
+    }
+    input[type="text"]:focus {
+      border: 1.5px solid #3366a3;
+    }
+    button {
+      background: #3366a3;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 0.6rem 1.3rem;
+      font-size: 1rem;
+      font-family: 'Epunda Slab', serif;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.4rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+    button:hover {
+      background: #244e7a;
+    }
+    .message {
+      margin-top: 0.8rem;
+      color: #2c4777;
+      font-weight: 500;
+      min-height: 1.4em;
+      font-family: 'Epunda Slab', serif;
+    }
+    .gift {
+      margin-top: 1.5rem;
+      animation: aparecer 1s ease;
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.96);}
+      to { opacity: 1; transform: scale(1);}
+    }
+    .download-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #85b7e9;
+      color: #204570;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      font-family: 'Epunda Slab', serif;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .download-btn:hover {
+      background: #3366a3;
+      color: #fff;
+    }
+    .gift img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px #b7d6ec;
+      background: #e9f3ff;
+    }
+    .gift p {
+      margin-top: 1rem;
+      color: #204570;
+      font-size: 1.1rem;
+      font-family: 'Epunda Slab', serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 id="titulo">Para alguien especial...</h1>
+    <div class="question" id="question">¿Qué hicimos en nuestra primera cita?</div>
+    <input type="text" id="answer" placeholder="Escribe tu respuesta">
+    <button onclick="checkAnswer()">Desbloquear regalo</button>
+    <div class="message" id="message"></div>
+    <div class="gift" id="gift" style="display:none;">
+      <img id="gift-img" src="regalo" alt="Tu regalo">
+      <br>
+      <button class="download-btn" onclick="descargarImagen()">Descargar foto</button>
+      <p>¡Sorpresa! Gracias por ser tú. 💞</p>
+    </div>
+  </div>
+  <script>
+    // Cambia aquí tu respuesta secreta (sin acentos, minúsculas, etc)
+    const correctAnswer = "bailamos bachata"; // <-- Modifica aquí la respuesta correcta
+
+    function normalizar(texto) {
+      return texto
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // quita acentos
+        .trim();
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById("answer").value;
+      const message = document.getElementById("message");
+      const gift = document.getElementById("gift");
+      if (normalizar(userAnswer) === normalizar(correctAnswer)) {
+        message.textContent = "";
+        gift.style.display = "block";
+        document.getElementById("answer").style.display = "none";
+        document.querySelector("button").style.display = "none";
+      } else {
+        message.textContent = "Ups, esa no es la respuesta. ¡Intenta de nuevo!";
+        gift.style.display = "none";
+      }
+    }
+
+    // Permite presionar Enter para enviar la respuesta
+    document.getElementById("answer").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") checkAnswer();
+    });
+
+    // Descargar imagen (funciona si la imagen es pública y permite cross-origin)
+    function descargarImagen() {
+      const img = document.getElementById("gift-img");
+      const url = img.src;
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'regalo.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
