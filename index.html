@@ -183,14 +183,13 @@
     document.getElementById("answer").addEventListener("keydown", function(e) {
       if (e.key === "Enter") checkAnswer();
     });
-
-    // Descargar imagen (funciona si la imagen es pública y permite cross-origin)
+// Descargar imagen
     function descargarImagen() {
       const img = document.getElementById("gift-img");
       const url = img.src;
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'regalo.jpg';
+      link.download = 'regalo.png';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
